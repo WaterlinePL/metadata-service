@@ -19,8 +19,14 @@ _mailinglist
 docs/_build/
 .vscode
 
+celerybeat-schedule
+Pipfile.lock
+
 # Coverage reports
 htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+
+
