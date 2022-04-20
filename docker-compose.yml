@@ -1,27 +1,24 @@
 version: '3'
 services:
-  broker-rabbitmq:
-    image: "rabbitmq:3.9.15-management"
-    environment:
-      - RABBITMQ_DEFAULT_USER=rabbit_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_password
+  redis:
+    image: 'redis:alpine'
+    hostname: redis
+    
   api:
     build: .
     ports:
      - "80:5001"
     environment:
       - APP_ENV=${APP_ENV}
+    links:
+      - redis
+    depends_on:
+      - redis
+
   api-worker:
     build: .
     command: celery -A tasks.celery worker --loglevel=info --uid celery
     environment:
       - APP_ENV=${APP_ENV}
-    depends_on:
-      - broker-rabbitmq
-  api-beat:
-    build: .
-    command: celery -A tasks.celery beat --loglevel=info
-    environment:
-      - APP_ENV=${APP_ENV}
-    depends_on:
-      - broker-rabbitmq
+    links:
+      - redis

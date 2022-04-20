@@ -1,7 +1,6 @@
 # Metadata Service
 
-# Installation using docker 
-```
-APP_ENV=Dev docker compose up
-APP_ENV=Production docker compose up
+# Startup using docker 
+``` bash
+APP_ENV=Dev docker compose up --build
 ```

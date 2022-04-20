@@ -7,7 +7,7 @@ name = "pypi"
 flask = "*"
 flask-restful = "*"
 flask-migrate = "*"
-celery = "*"
+"celery[redis]" = "*"
 
 [dev-packages]
 
