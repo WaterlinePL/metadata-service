@@ -1,4 +1,4 @@
-name: Publish Docker image to Docker Hub repository
+name: Publish Docker image to Docker Hub repository based on Tag
 
 on:
   push:
@@ -36,5 +36,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/${{env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }},${{secrets.DOCKERHUB_USERNAME}}/${{env.IMAGE_NAME}}:latest
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/${{env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }}
 
