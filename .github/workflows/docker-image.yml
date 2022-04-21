@@ -6,7 +6,7 @@ on:
       - "v*.*.*"
 
 env:
-  IMAGE_NAME: metadata-servicep
+  IMAGE_NAME: metadata-service
 
 jobs:
   push_to_registry:
@@ -24,17 +24,17 @@ jobs:
       - name: Check out GitHub repo
         uses: actions/checkout@v3
 
-      - name: Login to Github Packages
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PAT }}
+          username: ${{ secrets.DOCKER_HUB_L }}
+          password: ${{ secrets.DOCKER_HUB_P }}
+          
 
       - name: Build image and push to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }}
+          tags: ${{ secrets.DOCKER_HUB_L }}/${{env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }}
 
