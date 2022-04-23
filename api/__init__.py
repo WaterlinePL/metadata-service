@@ -3,10 +3,12 @@ from flask_restful import Api, Resource
 import logging
 import config
 
-from .src import metadata, status
+from .src import metadata, status, minio_init
 
 api = Api(prefix=config.API_PREFIX)
 logger = logging.getLogger()
+
+minio_init.init_buckets(['input-data','output-data'])
 
 class StatusAPI(Resource):
     def get(self, task_id):

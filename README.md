@@ -3,6 +3,8 @@
 Service written in Python Flask, using Celery to handle tasks of metadata detection.
 # Startup using docker - for local development
 ``` bash
+docker network create -d bridge waterline
+
 $ APP_ENV=Dev docker compose up --build
 ```
 

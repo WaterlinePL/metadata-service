@@ -2,6 +2,18 @@ import time
 
 from tasks import celery
 from celery import states
+from minio import Minio
+
+import logging
+import config
+
+logger = logging.getLogger()
+
+client = Minio(config.minio_url,
+    access_key='minioadmin',
+    secret_key='minioadmin', 
+    secure=False)
+
 def process_files():
     task = process_data.delay()
     return {'task_id': task.id}, 200
@@ -10,6 +22,7 @@ def process_files():
 @celery.task(bind=True)
 def process_data(self):
     # self.update_state(state=celery.states.FAILURE, meta="Reason")
+
     self.update_state(state=states.STARTED)
     time.sleep(20)
     

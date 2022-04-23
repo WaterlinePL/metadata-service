@@ -9,6 +9,7 @@ flask-restful = "*"
 flask-migrate = "*"
 "celery[redis]" = "*"
 "gunicorn[gevent]" = "*"
+"minio" = "*"
 
 [dev-packages]
 
