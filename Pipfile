@@ -8,6 +8,7 @@ flask = "*"
 flask-restful = "*"
 flask-migrate = "*"
 "celery[redis]" = "*"
+"gunicorn[gevent]" = "*"
 
 [dev-packages]
 

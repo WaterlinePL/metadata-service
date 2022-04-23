@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: metadata
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: metadata-svc
+  name: metadata-svc
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 5001
+  selector:
+    io.kompose.service: metadata-svc
+status:
+  loadBalancer: {}

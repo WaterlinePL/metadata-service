@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: metadata
+  labels:
+    io.kompose.service: celery-worker
+  name: celery-worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      io.kompose.service: celery-worker
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: celery-worker
+    spec:
+      containers:
+        - image: watermodelling/metadata-service:latest
+          name: celery-worker
+          args:
+            - celery
+            - -A
+            - tasks.celery
+            - worker
+            - --loglevel=info
+            - --uid
+            - celery
+          envFrom:
+            - configMapRef:
+                name: svc-config
+          resources: {}
+      hostname: celery-worker
+      restartPolicy: Always
+status: {}

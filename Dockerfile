@@ -1,6 +1,5 @@
 FROM python:3.8
 
-RUN pip install --upgrade pip
 RUN pip install pipenv
 
 ADD . /flask-deploy
@@ -9,7 +8,6 @@ WORKDIR /flask-deploy
 
 RUN pipenv install --system --skip-lock
 
-RUN pip install gunicorn[gevent]
 RUN useradd -ms /bin/bash celery
 
 EXPOSE 5001
