@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   namespace: metadata
   labels:
-    io.kompose.service: celery-worker
+    nameLabel: celery-worker
   name: celery-worker
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: celery-worker
+      nameLabel: celery-worker
   strategy: {}
   template:
     metadata:
       labels:
-        io.kompose.service: celery-worker
+        nameLabel: celery-worker
     spec:
       containers:
         - image: watermodelling/metadata-service:latest

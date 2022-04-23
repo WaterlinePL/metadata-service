@@ -2,27 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: metadata
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: metadata-svc
+    nameLabel: metadata-svc
   name: metadata-svc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: metadata-svc
+      nameLabel: metadata-svc
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: metadata-svc
+        nameLabel: metadata-svc
     spec:
       containers:
         - image: watermodelling/metadata-service:latest
