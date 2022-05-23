@@ -30,6 +30,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: svc-config
+            - secretRef:
+                name: env-secrets
           resources: {}
       hostname: celery-worker
       restartPolicy: Always

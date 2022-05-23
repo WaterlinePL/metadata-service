@@ -1,3 +1,5 @@
+import os
+
 class BaseConfig():
     API_PREFIX = '/api'
     imports = ('api',)
@@ -24,6 +26,9 @@ class ProductionConfig(BaseConfig):
     FLASK_ENV = 'production'
     CELERY_broker_url = 'redis://redis:6379/0'
     result_backend = 'redis://redis:6379/0'
+    minio_url = os.environ.get('MINIO_URL', 'minio.minio:9000')
+    minio_access_key = os.environ.get('MINIO_ACCESS_KEY', 'root')
+    minio_secret_key = os.environ.get('MINIO_SECRET_KEY', 'password')
 
 
 class TestConfig(BaseConfig):

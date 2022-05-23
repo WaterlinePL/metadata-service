@@ -10,8 +10,8 @@ import config
 logger = logging.getLogger()
 
 client = Minio(config.minio_url,
-    access_key='minioadmin',
-    secret_key='minioadmin', 
+    access_key=config.minio_access_key,
+    secret_key=config.minio_secret_key, 
     secure=False)
 
 def process_files():
@@ -22,7 +22,6 @@ def process_files():
 @celery.task(bind=True)
 def process_data(self):
     # self.update_state(state=celery.states.FAILURE, meta="Reason")
-
     self.update_state(state=states.STARTED)
     time.sleep(20)
     
