@@ -8,8 +8,8 @@ metadata:
 spec:
   ports:
     - name: "metadata-api"
-      port: 80
-      targetPort: 5001
+      port: 8080
+      targetPort: 8080
   selector:
     nameLabel: metadata-svc
 status:

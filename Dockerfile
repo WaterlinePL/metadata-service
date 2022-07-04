@@ -10,6 +10,6 @@ RUN pipenv install --system --skip-lock
 
 RUN useradd -ms /bin/bash celery
 
-EXPOSE 5001
+EXPOSE 8080
 
-CMD gunicorn --worker-class gevent --workers 8 --bind 0.0.0.0:5001 wsgi:app --max-requests 10000 --timeout 5 --keep-alive 5 --log-level info
+CMD gunicorn --worker-class gevent --workers 8 --bind 0.0.0.0:8080 wsgi:app --max-requests 10000 --timeout 5 --keep-alive 5 --log-level info

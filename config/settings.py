@@ -20,6 +20,7 @@ class DevConfig(BaseConfig):
     minio_access_key = 'root'
     minio_secret_key = 'password'
     minio_secure = False
+    host = '0.0.0.0'
 
 
 
@@ -31,6 +32,7 @@ class ProductionConfig(BaseConfig):
     minio_access_key = os.environ.get('MINIO_ACCESS_KEY', 'root')
     minio_secret_key = os.environ.get('MINIO_SECRET_KEY', 'password')
     minio_secure = True
+    host = os.environ.get('API_HOST', '0.0.0.0')
 
 
 class TestConfig(BaseConfig):
