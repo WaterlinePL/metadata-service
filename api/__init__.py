@@ -16,9 +16,9 @@ class StatusAPI(Resource):
         return status.check_status(task_id)
 
 class MetadataAPI(Resource):
-    def get(self):
-        print(self)
-        return 200
+    def get(self, bucket, filename):
+        logger.log(msg=f'Get metadata for bucket {bucket} and file {filename}',level=10)
+        return metadata.get(bucket,filename)
 
     def post(self):
         logger.log(msg="Process data",level=10)
@@ -27,7 +27,7 @@ class MetadataAPI(Resource):
 
 
 # data processing endpoint
-api.add_resource(MetadataAPI, '/metadata')
+api.add_resource(MetadataAPI, '/metadata/<string:bucket>/<string:filename>/')
 
 # task status endpoint
 api.add_resource(StatusAPI, '/status/<string:task_id>')
