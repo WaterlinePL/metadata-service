@@ -5,6 +5,8 @@ items:
   metadata:
     name: metadata-service-ingress
     namespace: metadata
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
   spec:
     ingressClassName: nginx
     rules:
@@ -16,6 +18,6 @@ items:
               name: metadata-svc
               port:
                 name: metadata-api
-          path: /metadata
+          path: /metadata(/|$)(.*)
           pathType: ImplementationSpecific
 kind: List
