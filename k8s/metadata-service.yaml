@@ -7,7 +7,7 @@ metadata:
   name: metadata-svc
 spec:
   ports:
-    - name: "metadata-svc-api"
+    - name: "metadata-api"
       port: 80
       targetPort: 5001
   selector:

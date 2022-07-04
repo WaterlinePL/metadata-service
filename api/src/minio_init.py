@@ -9,7 +9,7 @@ def init_buckets(buckets):
     client = Minio(config.minio_url,
     access_key=config.minio_access_key,
     secret_key=config.minio_secret_key, 
-    secure=False)
+    secure=config.minio_secure)
 
     for bucket in buckets:
         if client.bucket_exists(bucket):

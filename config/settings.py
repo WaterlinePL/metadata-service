@@ -19,6 +19,7 @@ class DevConfig(BaseConfig):
     minio_url = 'localhost:9000'
     minio_access_key = 'root'
     minio_secret_key = 'password'
+    minio_secure = False
 
 
 
@@ -29,6 +30,7 @@ class ProductionConfig(BaseConfig):
     minio_url = os.environ.get('MINIO_URL', 'minio.minio:9000')
     minio_access_key = os.environ.get('MINIO_ACCESS_KEY', 'root')
     minio_secret_key = os.environ.get('MINIO_SECRET_KEY', 'password')
+    minio_secure = True
 
 
 class TestConfig(BaseConfig):

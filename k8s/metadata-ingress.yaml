@@ -15,6 +15,7 @@ items:
             service:
               name: metadata-svc
               port:
-                name: metadata-svc-api
+                name: metadata-api
           path: /metadata
           pathType: ImplementationSpecific
+kind: List
