@@ -27,7 +27,7 @@ class MetadataAPI(Resource):
 
 
 # data processing endpoint
-api.add_resource(MetadataAPI, '/metadata/<string:bucket>/<string:filename>/')
+api.add_resource(MetadataAPI, '/process/<string:bucket>/<string:filename>/')
 
 # task status endpoint
 api.add_resource(StatusAPI, '/status/<string:task_id>')

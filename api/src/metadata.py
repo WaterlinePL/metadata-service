@@ -1,4 +1,6 @@
 import time, os
+import zipfile
+import json 
 
 from tasks import celery
 from celery import states
@@ -16,9 +18,16 @@ client = Minio(config.minio_url,
 
 def get(bucket, filename):
     client.fget_object(bucket, filename, filename)
+    dictionary = {}
+    if filename.endswith('.zip'):
+        zip_obj= zipfile.ZipFile(filename,"r")
+        content_list = zip_obj.namelist()
+        dictionary["extension"] = "zip"
+        dictionary["content_list"] = content_list
 
     os.remove(filename)
-    return {'metadata': 'test'}
+    return {'metadata': json.dumps(dictionary, indent = 4) 
+}
 
 def process_files():
     task = process_data.delay()
