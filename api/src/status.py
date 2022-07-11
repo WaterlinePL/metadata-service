@@ -15,7 +15,7 @@ def check_status(task_id: str) -> str:
             'total': 1,
             'status': 'Pending...'
         }
-    elif task.state != 'FAILURE':
+    elif task.state == 'SUCCESS':
         response = {
             'state': task.state,
             'current': task.info.get('current', 0),
@@ -24,12 +24,16 @@ def check_status(task_id: str) -> str:
         }
         if 'result' in task.info:
             response['result'] = task.info['result']
-    else:
+    elif task.state == 'FAILURE':
         # something went wrong in the background job
         response = {
             'state': task.state,
             'current': 1,
             'total': 1,
             'status': str(task.info),  # this is the exception raised
+        }
+    else:
+        response = {
+            'state': task.state,
         }
     return jsonify(response)

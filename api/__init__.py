@@ -21,8 +21,8 @@ class MetadataAPI(Resource):
         return metadata.get(bucket,filename)
 
     def post(self, bucket, filename):
-        logger.log(msg=f'Get metadata for bucket {bucket} and file {filename}',level=10)
-        return metadata.get(bucket,filename)
+        logger.log(msg=f'Process metadata for bucket {bucket} and file {filename}',level=10)
+        return metadata.process(bucket,filename)
 
 
 
