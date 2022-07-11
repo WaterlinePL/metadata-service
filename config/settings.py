@@ -16,7 +16,7 @@ class DevConfig(BaseConfig):
     DEBUG = True
     CELERY_broker_url = 'redis://redis:6379/0'
     result_backend = 'redis://redis:6379/0'
-    minio_url = 'localhost:9000'
+    minio_url = 'minio:9000'
     minio_access_key = 'root'
     minio_secret_key = 'password'
     minio_secure = False
