@@ -12,27 +12,34 @@ class BaseConfig():
 
 
 class DevConfig(BaseConfig):
+    host = '0.0.0.0'
     FLASK_ENV = 'development'
     DEBUG = True
     CELERY_broker_url = 'redis://redis:6379/0'
     result_backend = 'redis://redis:6379/0'
+
     minio_url = 'minio:9000'
     minio_access_key = 'root'
     minio_secret_key = 'password'
     minio_secure = False
-    host = '0.0.0.0'
+
+    datahub_url = 'http://datahub-gms:8080'
 
 
 
 class ProductionConfig(BaseConfig):
+    host = os.environ.get('API_HOST', '0.0.0.0')
     FLASK_ENV = 'production'
     CELERY_broker_url = 'redis://redis:6379/0'
     result_backend = 'redis://redis:6379/0'
+
     minio_url = os.environ.get('MINIO_URL', 'minio.minio:9000')
     minio_access_key = os.environ.get('MINIO_ACCESS_KEY', 'root')
     minio_secret_key = os.environ.get('MINIO_SECRET_KEY', 'password')
     minio_secure = True
-    host = os.environ.get('API_HOST', '0.0.0.0')
+
+    datahub_url =  os.environ.get('DATAHUB_GMS_URL', 'http://datahub-datahub-gms.data.svc.cluster.local:8080')
+
 
 
 class TestConfig(BaseConfig):

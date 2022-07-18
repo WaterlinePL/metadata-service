@@ -25,7 +25,7 @@ spec:
             - secretRef:
                 name: env-secrets
           ports:
-            - containerPort: 8080
+            - containerPort: 5001
           resources: {}
       hostname: metadata-svc
       restartPolicy: Always

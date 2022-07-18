@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Api, Resource
 
 import logging
@@ -16,18 +17,27 @@ class StatusAPI(Resource):
         return status.check_status(task_id)
 
 class MetadataAPI(Resource):
-    def get(self, bucket, filename):
+    def get(self):
+        json_data = request.get_json(force=True)
+        bucket = json_data['bucket']
+        filename = json_data['filename']
         logger.log(msg=f'Get metadata for bucket {bucket} and file {filename}',level=10)
         return metadata.get(bucket,filename)
 
-    def post(self, bucket, filename):
-        logger.log(msg=f'Process metadata for bucket {bucket} and file {filename}',level=10)
-        return metadata.process(bucket,filename)
+class MetadataDatahubAPI(Resource):
+    def post(self):
+        json_data = request.get_json(force=True)
+        urn = json_data['urn']
+        logger.log(msg=f'Process metadata for urn {urn}',level=10)
+        return metadata.process(urn)
 
 
 
 # data processing endpoint
-api.add_resource(MetadataAPI, '/process/<string:bucket>/<string:filename>/')
+api.add_resource(MetadataAPI, '/get/')
+
+# data processing endpoint
+api.add_resource(MetadataDatahubAPI, '/process/')
 
 # task status endpoint
 api.add_resource(StatusAPI, '/status/<string:task_id>')
