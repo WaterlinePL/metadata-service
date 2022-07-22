@@ -24,7 +24,8 @@ class DevConfig(BaseConfig):
     minio_secure = False
 
     datahub_url = 'http://datahub-gms:8080'
-
+    datahub_token = ''
+    graphql_endpoint = 'http://datahub-frontend-react:9002/api/graphql'
 
 
 class ProductionConfig(BaseConfig):

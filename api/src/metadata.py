@@ -71,24 +71,26 @@ def process_file(bucket: str, filename: str):
     client.fget_object(bucket, filename, local_file_path)
     extension = pathlib.Path(filename).suffix
     dictionary["extension"] = extension
+    tags = []
 
     if extension == '.zip':
         zip_obj = zipfile.ZipFile(local_file_path,"r")
         content_list = zip_obj.namelist()
         dictionary["content_list"] = str(content_list)
-        dictionary = find_model_specific_meta(dictionary)
-        tags = define_tags(dictionary)
 
+    dictionary = find_model_specific_meta(dictionary)    
+    tags += define_tags(dictionary)
     os.remove(local_file_path)
     return dictionary, tags
 
 def find_model_specific_meta(dictionary: dict) -> dict:
-    if dictionary["content_list"].lower().find('modflow') != -1:
-        dictionary["model_type"] = 'modflow'
-    elif dictionary["content_list"].lower().find('hydrus') != -1: 
-        dictionary["model_type"] = 'hydrus'
-    else:
-        dictionary["model_type"] = 'unknown'
+    dictionary["model_type"] = 'unknown'
+    if 'content_list' in dictionary:
+        if dictionary["content_list"].lower().find('modflow') != -1:
+            dictionary["model_type"] = 'modflow'
+        elif dictionary["content_list"].lower().find('hydrus') != -1: 
+            dictionary["model_type"] = 'hydrus'
+
     return dictionary
 
 
@@ -113,6 +115,7 @@ def update_datahub_meta(dictionary: dict, tags: list, urn: str) -> str:
     # Emit metadata! This is a blocking call
     emitter.emit(metadata_event)
 
+    print(tags)
     my_tags = [TagAssociationClass(tag=make_tag_urn(t)) for t in tags]
 
     tag_event: MetadataChangeProposalWrapper = MetadataChangeProposalWrapper(
