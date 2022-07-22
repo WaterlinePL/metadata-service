@@ -12,10 +12,7 @@ $ APP_ENV=Dev docker compose up --build
 ``` bash
 $ kubectl apply -f k8s/metadata-ns.yaml
 
-$ kubectl create secret generic env-secrets \
-  --from-literal=MINIO_URL='minio.minio:9000' \
-  --from-literal=MINIO_ACCESS_KEY='root' \
-  --from-literal=MINIO_SECRET_KEY='password' -n metadata
+$ kubectl create secret generic env-secrets   --from-literal=API_HOST='<api_host>'   --from-literal=MINIO_URL='<minio_url>'   --from-literal=MINIO_ACCESS_KEY='<minio_access_key>'   --from-literal=MINIO_SECRET_KEY='<minio_secret_key' --from-literal=DATAHUB_GMS_URL='http://datahub-datahub-gms.data.svc.cluster.local:8080' --from-literal=DATAHUB_GRAPHQL_URL='http://datahub-datahub-frontend.data.svc.cluster.local:8080' --from-literal=DATAHUB_TOKEN='<personal_token>' -n metadata
 
 # Dev setup:
 $ kubectl create configmap svc-config --from-env-file=dev.properties -n metadata

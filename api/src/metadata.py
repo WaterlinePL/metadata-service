@@ -1,7 +1,7 @@
 import os
 import zipfile
 import pathlib
-
+import requests, json
 from tasks import celery
 from celery import states
 from minio import Minio
@@ -125,3 +125,51 @@ def update_datahub_meta(dictionary: dict, tags: list, urn: str) -> str:
 
     emitter.emit(tag_event)
 
+def list_not_processed_files(request_query: str, filtered_tag: str) -> str:
+    accessToken = config.graphql_token 
+    endpoint = config.graphql_endpoint
+    headers = {"Authorization": f"Bearer {accessToken}"}
+
+    query = 'query { search(input: { type: DATASET, query: '+request_query+'", filters: [{ field: "", value: "" }] , start: 0, count: 10 })'+""" {
+        start
+        count
+        total
+        searchResults {
+        entity {
+            urn
+            type
+            ...on Dataset {
+                name
+                tags {
+                    tags {
+                        tag {
+                        urn
+                        }
+                    }
+                    }
+            }
+        }
+        }
+    }
+    }"""
+
+    r = requests.post(endpoint, json={"query": query}, headers=headers)
+    if r.status_code == 200:
+        files_filtered_with_tag = []
+        all_files = r.json()
+        if 'data' in all_files:
+            for file in all_files['data']['search']['searchResults']:
+                tags = file['entity']['tags']
+                has_metadata_processed_tag = False
+                if tags != None:
+                    for tag in tags['tags']:
+                        if tag['tag']['urn'] == filtered_tag:
+                            has_metadata_processed_tag = True
+                if has_metadata_processed_tag == False:
+                    files_filtered_with_tag.append(file)
+            return files_filtered_with_tag
+        else:
+            if 'errors' in all_files:
+                raise Exception(f"Query failed to run with an error:  {all_files['errors']}.")
+    else:
+        raise Exception(f"Query failed to run with a {r.status_code}.")

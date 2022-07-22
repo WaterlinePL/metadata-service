@@ -31,7 +31,15 @@ class MetadataDatahubAPI(Resource):
         logger.log(msg=f'Process metadata for urn {urn}',level=10)
         return metadata.process(urn)
 
+class MetadataUnprocessedFileListApi(Resource):
+    def get(self):
+        request_query = 'hydrological-simulations'
+        filtered_tag = "urn:li:tag:metadata-processed"
+        logger.log(msg=f'List unprocessed files',level=10)
+        return metadata.list_not_processed_files(request_query,filtered_tag)
 
+# unprocessed files list endpoint
+api.add_resource(MetadataUnprocessedFileListApi, '/unprocessed/')
 
 # data processing endpoint
 api.add_resource(MetadataAPI, '/get/')
