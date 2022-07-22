@@ -130,7 +130,7 @@ def list_not_processed_files(request_query: str, filtered_tag: str) -> str:
     endpoint = config.graphql_endpoint
     headers = {"Authorization": f"Bearer {accessToken}"}
 
-    query = 'query { search(input: { type: DATASET, query: '+request_query+'", filters: [{ field: "", value: "" }] , start: 0, count: 10 })'+""" {
+    query = 'query { search(input: { type: DATASET, query: "'+request_query+'", filters: [{ field: "", value: "" }] , start: 0, count: 10 })'+""" {
         start
         count
         total
@@ -166,10 +166,10 @@ def list_not_processed_files(request_query: str, filtered_tag: str) -> str:
                         if tag['tag']['urn'] == filtered_tag:
                             has_metadata_processed_tag = True
                 if has_metadata_processed_tag == False:
-                    files_filtered_with_tag.append(file)
+                    files_filtered_with_tag.append(file['entity']['urn'])
             return files_filtered_with_tag
         else:
             if 'errors' in all_files:
-                raise Exception(f"Query failed to run with an error:  {all_files['errors']}.")
+                return f"Query failed to run with an error:  {all_files['errors']}."
     else:
-        raise Exception(f"Query failed to run with a {r.status_code}.")
+        return f"Query failed to run with a {r.status_code}."

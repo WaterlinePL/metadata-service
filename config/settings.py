@@ -40,7 +40,7 @@ class ProductionConfig(BaseConfig):
 
     datahub_url =  os.environ.get('DATAHUB_GMS_URL', 'http://datahub-datahub-gms.data.svc.cluster.local:8080')
     graphql_token = os.environ.get('DATAHUB_TOKEN', '')
-    graphql_endpoint = os.environ.get('DATAHUB_GRAPHQL_URL', 'http://datahub-datahub-frontend.data.svc.cluster.local:8080')
+    graphql_endpoint = os.environ.get('DATAHUB_GRAPHQL_URL', 'http://datahub-datahub-frontend.data.svc.cluster.local:9002/api/graphql')
 
 
 
