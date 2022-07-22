@@ -99,7 +99,7 @@ def define_tags(dictionary: dict) -> list:
     return tags
 
 def update_datahub_meta(dictionary: dict, tags: list, urn: str) -> str:
-    emitter = DatahubRestEmitter(gms_server=config.datahub_url, extra_headers={})
+    emitter = DatahubRestEmitter(gms_server=config.datahub_url, extra_headers={}, token=config.datahub_token)
 
     dataset_properties = DatasetPropertiesClass(customProperties=dictionary)
     metadata_event: MetadataChangeProposalWrapper = MetadataChangeProposalWrapper(
@@ -126,7 +126,7 @@ def update_datahub_meta(dictionary: dict, tags: list, urn: str) -> str:
     emitter.emit(tag_event)
 
 def list_not_processed_files(request_query: str, filtered_tag: str) -> str:
-    accessToken = config.graphql_token 
+    accessToken = config.datahub_token 
     endpoint = config.graphql_endpoint
     headers = {"Authorization": f"Bearer {accessToken}"}
 
